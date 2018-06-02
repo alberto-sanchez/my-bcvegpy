@@ -1,0 +1,15 @@
+phase/vegas.F --- Change the code of vegas(xx,xx) function add optimization for finding xmax grid.
+                  Add gen(xx,xx) function for unweight events generation.
+generate/genevnt.F ---- In upenvnt subroutine call gen(xx,xx) subroutine when unwght=true
+                        Change the cross-section when idwtup=3
+generate/evntinit.F----Call vegas in different option, especially for unweight events generation.
+generate/initmixgrade.F----Read the grid file for mix events generation. 
+parameter.F-----Add one variable unwght to switch on/off unweighted events generation. 
+                Add Bc(2S) generation parameter.
+                Change parameter input mode for bcvegpy_set_par.nam.
+setparameter/simparameter.F------ Add Bc(2S) generation parameters.               
+bcvegpy.F -----------Change pt and eta source; add LHE output.
+pybook/uppyfact.F ----Change unweighted events differential cross-section output
+system/uplogo.F-----Add variable unwght status report and other information.
+system/upopenfile.F------Change the output files for Bc(2S) and different state.
+

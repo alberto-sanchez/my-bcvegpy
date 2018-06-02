@@ -1,0 +1,254 @@
+
+###############################################################
+### The following is the old read-me file for the old version
+### of BCVEGPY2.0. Only for your consideration, especailly,
+### the parameter meanings are the same for both versions.
+###############################################################
+
+
+****************************************************************
+****************************************************************
+***   The following is the old readme file for BCVEGPY 2.0.  ***
+****************************************************************
+
+----------------------------------------------------------------
+
+*****************************************************************
+THE B_c GENERATOR BCVEGPY HAS BEEN TESTED BY Compaq Visual Fortan
+6.5 WITH WINDOWS OPERATING SYSTEMS AND BY f77/f90 WITH LINUX/UNIX 
+OPERATING SYSTEMS AT THE PC OR AT SUN STATION.
+*****************************************************************
+
+
+*****************************************************************
+
+Note that since the generator BCVEGPY is implemented in PYTHIA, 
+so when running the program, users must pay attention to the 
+usage of the subroutine PYTIME in PYTITA, which is to show the 
+current date and time during program running. Since this task is not 
+standardized in Fortran 77, the routine PYTIME in PYTHIA is dummy
+and should be replaced properly by the user. Examples are given 
+in PYTHIA for the Fortran 90 routine, DEC Fortran 77, GNU LINUX 
+libU77, SunOS. If one does not have suitable routines in hand, 
+in PYTHIA, one extra example (example 0) has also been provided
+to show what to do. More clearly, for Visual Fortan and LINUX,
+we may use example 3, while for SunOS, we may need to use example 4. 
+
+-------------------------------------------------------------------
+
+In our program, we have taken the most simplest one to avoid some
+problems, i.. example 0.
+
+*******************************************************************
+
+******************************************************************
+The commands for compiling and running the program 
+(the spacing and line breaking as follows):
+******************************************************************
+
+A) for linux or unix operating system:
+
+=================================================================
+all the needed (*.for) files:
+
+bcvegpy.for foursets.for genevnt.for lorentz.for outerpdf.for 
+p1p1amp.for pj0amp.for pj1amp.for pj2amp.for py6208.for ssamp.for
+
+note: py6208.for is a short notation for pythia6208.for.
+
+all the head files (*.f) needed to be included:
+inclamp.f inclcon.f inclppp.f
+
+three extra files for the PDFs:
+lo2002.dat grv98lo.grid cteq6l.tbl
+=================================================================
+1) >f77 -c *.for   
+   >f77 -o bc.exe *.o      
+   >./bc.exe
+==================================================================
+
+2) >f90 -O5 -fast *.for      
+   >./bcvegpy.out
+
+********************************************************************
+
+B) for windows operating system with virtual Fortran:
+
+=================================================================
+1) use the main program (bcvegpy.for) to create an active 
+   projective workspace
+
+2) add all the necessary files (*.for) into this project
+
+3) compile and excute the program (note the included files, i.e. 
+   in*.f should be in the same directory)
+
+==================================================================
+
+--------------------------------------------------------------------
+
+1)
+Some changes mainly about the kinds fo output-files are made, 
+especially the output files about the PT and Y:
+
+all the output files:
+A) with different P_T cut:
+   rap.dat, pt005y.dat, pt020y.dat, pt035y.dat, pt050y.dat, pt100y.dat
+   shat.dat, pt005shat.dat, pt020shat.dat, pt035shat.dat, pt050shat.dat, 
+   pt100shat.dat
+B) with different Y cut:
+   pt.dat, y05pt.dat, y10pt.dat, y15pt.dat, y20pt.dat, y25pt.dat
+   y05shat.dat, y10shat.dat, y15shat.dat, y20shat.dat, y25shat.dat
+C) pseta.dat, y.dat, z.dat.
+
+2)
+Add two variables: INUMEVNT; IVEGGRADE.
+INUMEVNT-- switch on/off to get the event number distributions of P_T, rap, 
+           shat, pseta, y, z.
+IVEGGRADE- switch on/off to use the existed grade before running vegas, the 
+           initial condition for the running and that for getting the existed 
+           grade should be the same. This is used to get a more precise 
+           sampling grade.
+3)
+Add the quark-antiquark annihilation mechanism for s-wave generation.
+4)
+Add three outer PDFs: CTEQ6L, GRV98LO, MSRT2001LO.
+5)
+Correct the bugs for getting the event number distributions. and provided 
+three methods to get the event number distributions.
+6)
+For convenience, adding a file (parameter.for) getting the initial values 
+for the parameters. One may change the value of IREADDATA in parameter.for 
+to 1 and then still can get the data from the outer data file, (input.dat).
+7)
+For convenience, providing an switch IMIX to generate the mixed events or not.
+If IMIX=1, then it will used the dominant gluon-gluon fusion mechanism to
+generate the mixture of eight Bc states (all these states are shown explicitly
+in the program or paper hep-ph/0504017). If (IMIX=0), then it will generate
+each Bc state separately with proper options.
+8)
+For convenience, we provide three types of mixed events:
+under the condition of 'IMIX=1': if IMIXTYPE=1, then
+it can generate the mixed events for all the eight $B_c$ states;
+if IMIXTYPE=2, then it is to generate the mixed events only for
+the two S-wave states $|(c\bar b)_{\bf 1}(^{1}S_{0}) \rangle$ and
+$|(c\bar b)_{\bf 1} (^{3}S_{1}) \rangle$; if IMIXTYPE=3, then it
+is to generate the mixed events for all the P-wave states:
+$|(c\bar b)_{\bf 1}(^{1}P_{1}) \rangle$, $|(c\bar b)_{\bf
+1}(^{3}P_{J=0,1,2})\rangle$, $|(c\bar b)_{\bf 8}(^{1}S_{0})
+g\rangle$ and $|(c\bar b)_{\bf 8}(^{3}S_{1}) g\rangle$.
+
+**************************************************************************
+
+THE NEEDED PARAMETER: (in sequential order)
+
+***********************************************
+*            PARAMETER NAME:                  *
+***********************************************
+
+1) PMBC PMB PMC FBC
+2) PTCUT ETACUT ECM IBCSTATE IGENERATE IVEGASOPEN
+3) NUMBER NITMX
+4) NQ2 NPDFU NEV
+5) ISHOWER MSTP(51)
+6) IDWTUP MSTU(111) PARU(111)
+7) ISUBONLY SUBENERGY IGRADE
+8) INUMEVNT IVEGGRADE IQQBAR IQCODE
+9) IOUTPDF  IPDFNUM  IOCTET  COEOCT
+
+********************************************************************
+**                SAMPLES FOR THE PARAMETERS                      **
+**                                                                **
+**        (MORE PRECISE EXPLANATIONS IN hep/ph-0309120)           **
+********************************************************************
+
+1) PMBC PMB PMC---- masses (GeV) of Bc, b, c respectively
+   F_Bc------ initial value for Bc decay constant, i.e. the value of zero
+              point wave functions: R(0) for s-wave or R'(0) for p-wave.
+              typically we choose R(0)=1.241GeV^{3/2}-->\psi(0)=0.35;
+              R'(0)=0.44833GeV^{5/2}-->\psi'(0)=0.219GeV^{5/2}
+
+2) PTCUT----- Bc PT cut (GeV)
+   ETACUT---- Bc rapidity cut (a high value means no cut at all) 
+   ECM------- C.M. Energy (GEV) of the hadron colliders, e.g.,
+               1.8D+3---TEVATRON RUN-I; 1.6D+4---LHC.
+   IBCSTATE (state for $(c\bar{b})$ system)
+               =1--- 1^S_0;
+               =2--- 3^S_1.
+   IGENERATE (whether to generate full events or not)
+               =0--- not generate;
+               =1--- generate
+   IVEGASOPEN (whether using VEGAS or not)
+               =1--- use;
+               =0--- not use
+
+3) NUMBER---- total number of calling FXN in each iteration in VEGAS
+   NITMX----- maximum iteration used in VEGAS
+
+4) NQ2 (type of Q^2)
+               =1--- shat/4; (shat means the square of the invariant mass of subprocess)
+               =2--- shat;
+               =3--- PTBC**2+PMBC**2;
+               =4--- (DSQRT(PTBC**2+PMBC**2)+DSQRT(PTB**2+PMB**2)+DSQRT(PTC**2+PMC**2))**2;
+               =5--- (DSQRT(PTBC**2+PMBC**2)+DSQRT(PTB**2+PMB**2)+DSQRT(PTC**2+PMC**2))**2/9;
+               =6--- PTB**2+PMB**2, in this case two energy scale is choosing, one is
+                     PTB**2+PMB**2 and the other is 4*PMC**2.
+               =7--- PTB**2+PMB**2; only one energy scale is choosing for alphas.
+               =8--- PTBC**2+PMBC**2, in this case two energy scale is choosing, one is
+                     PTBC**2+PMBC**2 and the other is 4*PMC**2.
+               =9-- PMBC, WHICH IS USED IN GOUZ'S GENERATOR.
+   NPDFU (type of incoming beams)
+               =1---TEVATRON ($P, \bar{P}$);
+               =2---LHC ($P, P$)
+   NEV------- number of events to be generated.
+
+5) ISHOWER (whether using initial and final state showers, multiple interactions,
+              hadronization switch on or off)
+               =0--- off;
+               =1--- on
+   MSTP(51) (type of structure functions, the list of some typical ones, and more can be
+             found in PYTHIA manual book)
+               =2    CTEQ3M;
+               =7    CTEQ5L;
+               =8    CTEQ5M;
+               =13   EHLQ set 2;
+
+6) IDWTUP (type of PYTHIA generates events)
+          here only =1 and =3 are programmed
+   MSTU(111)- setting the value of alphas.
+               =0, alphas constant with the value PARU(111);
+               =1, default in PYTHIA (the first order in pQCD);
+               =2, the second order (in pQCD).
+   PARU(111)- constant value of alphas, used when MSTU(111)=0.
+
+7) ISUBONLY-- whether keep or ignore the information of the sub-process
+              $gg\to Bc+b+\bar{c)$ including the cross-section,
+              PT distribution, rapidity and so on.
+   SUBENERGY- the C.M. energy of the sub-process $gg\to Bc+b+\bar{c}$.
+   IGRADE---- whther using the existed GRADE or not to determine the phase space.
+
+8) INUMEVNT-- switch on/off to get the event number distributions of P_T, rap, shat, pseta, y, z.
+   IVEGGRADE- switch on/off to use the existed grade before running vegas, the initial condition
+              for the running and that for getting the existed grade should be the same. This is
+              used to get a more precise sampling grade.
+   IQQBAR  -- switch on/off whether using the subprocess q+\bar{q}-> to generate the Bc events.
+              =0, no use and then subprocess, gg->Bc+b+\bar{c} is used as the default.
+              =1, use q\bar{q} fussion process instead of the gluon-gluon fusion subprocess to
+                  generate the Bc events.
+   IQCODE  -- used when IQQBAR=1, all the quark are massless and here only used when generating
+              the full Bc events, especially about the colr flow.
+              =1, q=u-quark;
+              =2, q=d-quark;
+              =3, q=s-quark.
+9) IOUTPDF--- WHETHER USING THE PDF OBTAINED OUT OF PYTHIA.
+              =1, using.
+              =0, not using.
+   IPDFNUM--- TYPES OF OUTER PDF,
+              =100, GRV98L
+              =200, MSRT2001L
+              =300, CTEQ6L
+   IOCTET---- WHETHER USING SUBPROCESS g+g->Bc+B+\bar{c}; Bc in color singlet S-wave states;
+              =1, USING
+              =0, NOT USING
+   COEOCT---- THE RELATION BETWEEN THE COLOR OCTET MATRIXELEMENT AND THE COLOR SINGLET ONE.
+              (SHOULD GIVE THE SQUARE VALUE).

@@ -1,0 +1,13 @@
+ $bcvegpy_set_par   
+   ENERGYOFTEVA = 1.96d+3
+   ENERGYOFLHC  = 0.70d+4
+   naccel       = 2 
+   i_mix        = 1
+   mix_type     = 2
+   igenmode     = 2
+   istate       = 1
+   numofevents  = 10000
+   ncall        = 10000
+   n_itmx     = 20
+   ibcrandom    = 7349925
+ $End
