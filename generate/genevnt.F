@@ -260,13 +260,17 @@ c...optionally write out event to disk. minimal size for time/spin fields.
         write(mstp(162),5200) nup,idprup,xwgtup,scalup,aqedup
      +   ,aqcdup
         do 190 i=1,nup
+          idfake = idup(i)
+          icolfa = icolup(2,i)
+          if (idfake.eq.541) idfake=100543
+          if (idfake.eq.-4) icolfa=503
           if(vtimup(i).eq.0d0) then
-            write(mstp(162),5300) idup(i),istup(i),mothup(1,i),
-     &      mothup(2,i),icolup(1,i),icolup(2,i),(pup(j,i),j=1,5),
+            write(mstp(162),5300) idfake,istup(i),mothup(1,i),
+     &      mothup(2,i),icolup(1,i),icolfa,(pup(j,i),j=1,5),
      &      ' 0. 9.'
           else
-            write(mstp(162),5400) idup(i),istup(i),mothup(1,i),
-     &      mothup(2,i),icolup(1,i),icolup(2,i),(pup(j,i),j=1,5),
+            write(mstp(162),5400) idfake,istup(i),mothup(1,i),
+     &      mothup(2,i),icolup(1,i),icolfa,(pup(j,i),j=1,5),
      &      vtimup(i),' 9.'
           endif
   190   continue

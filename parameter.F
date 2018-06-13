@@ -63,7 +63,7 @@ c...9---singlet 2_1s0; 10---singlet 2_3s1
 	logical wronginput,unwght
 	common/unweight/unwght
 	Common / bcvegpy_set_par / ENERGYOFTEVA, ENERGYOFLHC,
-     +  naccel, i_mix, mix_type, igenmode,istate,
+     +   pmassb, pmassc, naccel, i_mix, mix_type, igenmode,istate,
      +  numofevents, ncall, n_itmx, ibcrandom
 c
 c... Read parameter setting from file bcvegpy_set_par.nam
@@ -91,14 +91,14 @@ c...setting the basic parameters. note pmbc should be equal to
 c...(pmb+pmc) to ensure the gauge invariance of the amplitude.
       pmb  =5.0d0    !b quark mass (gev)
       pmc  =1.275d0    !~c quark mass (gev)
-c      pmb  = pmassb    !b quark mass (gev)
-c      pmc  = pmassc    !~c quark mass (gev)
+      pmb  = pmassb    !b quark mass (gev)
+      pmc  = pmassc    !~c quark mass (gev)
       pmbc = pmb+pmc   !~bc mass (gev)
 
 c------------------------------------------
 c...kinematical variables
-      ptcut = 0.0 !bc p_t cut (gev)
-      etacut= 10.0   !bc rapidity (y) cut
+      ptcut = 10.0 !bc p_t cut (gev)    was 0
+      etacut= 3.0   !bc rapidity (y) cut  was 10.
 
 c---------------------------------------
 c...npdfu=2:lhc=1.40d+4GeV; npdfu=1:tevatron=1.96d+3GeV.
@@ -253,7 +253,8 @@ c...for s-wave, r(0)=1.241  --->  \psi(0)=(0.35).
     
 c******************************************
 	if(ibcstate.eq.1 .or. ibcstate.eq.2) then 
-	  fbc =1.241
+c...	  fbc =1.241
+          fbc = 0.991  ! for 2s state
 	  fbcc=dsqrt(3.0d0*fbc**2/pi/pmbc)    
 	else  if(ibcstate.eq.9 .or. ibcstate.eq.10) then 
 	  pmb  =5.234d0    !b quark mass (gev)
@@ -341,10 +342,10 @@ c... Get parameters from namelist
 	implicit integer(i-n)
 	
 	Namelist / bcvegpy_set_par / ENERGYOFTEVA, ENERGYOFLHC,
-     +	 naccel, i_mix, mix_type, igenmode,istate, 
+     +   pmassb, pmassc, naccel, i_mix, mix_type, igenmode,istate,
      +	 numofevents, ncall, n_itmx, ibcrandom
 	Common / bcvegpy_set_par / ENERGYOFTEVA, ENERGYOFLHC,
-     +  naccel, i_mix, mix_type, igenmode,istate,
+     +   pmassb, pmassc, naccel, i_mix, mix_type, igenmode,istate,
      +  numofevents, ncall, n_itmx, ibcrandom
 c
 c-------------------------------------------------------------------------------
